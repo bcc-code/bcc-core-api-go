@@ -1,0 +1,1 @@
+docker run -p 3010:3010 -p 3020:3020  -v ./test-data:/test-data ghcr.io/bcc-code/bcc-core-api/bcc-core-emulator:9accdf757bc20f3b7c96ec20198bccb54058d1bb

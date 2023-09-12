@@ -1,0 +1,2 @@
+{"uid": "e88e4a8d-558a-4dfd-8e9e-389522ade4e0", "appUid": "990dc470-c4f4-429e-a11e-f094cb1cf7c0", "name": "Test", "type": "Static", "tags": ["Notifiactions", "AccessControl"], "lastChangedDate": "2023-06-19T13:07:37.204Z"}
+{"uid": "fab828ec-d648-4a7f-acf1-f627c5bd73f6", "appUid": "36af73d9-b27b-48ed-add1-67f53911094e", "name": "Test 2", "orgUid": "9e0b8d03-9799-416d-a70b-6da9f2e1ab48", "type": "Dynamic",  "rule": "{\"birthDate\": {\"_gt\": \"2010-10-10\"}}", "tags": ["Notifiactions"], "lastChangedDate": "2023-06-19T13:08:48.441Z"}
