@@ -1,5 +1,3 @@
-//go:generate go-enum --marshal
-
 package coreapi
 
 import (
@@ -43,11 +41,25 @@ type Person struct {
 	ProfilePicture string `json:"profilePicture"`
 }
 
-// ENUM(Male, Female, Unknown)
 type Gender string
+
+const (
+	GenderMale    Gender = "Male"
+	GenderFemale  Gender = "Female"
+	GenderUnknown Gender = "Unknown"
+)
 
 // ENUM(Single, Married, Widowed, Separated, SingleParent, Unknown)
 type MaritalStatus string
+
+const (
+	MaritalStatusSingle       MaritalStatus = "Single"
+	MaritalStatusMarried      MaritalStatus = "Married"
+	MaritalStatusWidowed      MaritalStatus = "Widowed"
+	MaritalStatusSeparated    MaritalStatus = "Separated"
+	MaritalStatusSingleParent MaritalStatus = "SingleParent"
+	MaritalStatusUnknown      MaritalStatus = "Unknown"
+)
 
 type Address struct {
 	Address1    string `json:"address1"`
@@ -73,6 +85,12 @@ type VisibilityPreferences struct {
 // ENUM(Global, District, Hidden)
 type SearchVisibility string
 
+const (
+	SearchVisibilityGlobal   SearchVisibility = "Global"
+	SearchVisibilityDistrict SearchVisibility = "District"
+	SearchVisibilityHidden   SearchVisibility = "Hidden"
+)
+
 type NationalId struct {
 	CountryIso2Code string `json:"countryIso2Code"`
 	Id              string `json:"id"`
@@ -91,10 +109,21 @@ type PersonRelation struct {
 	Type      PersonRelationType `json:"type"`
 	ValidFrom time.Time          `json:"validFrom"`
 	ValidTo   *time.Time         `json:"validTo"`
-} //@name PersonRelation
+}
 
-// ENUM(Child, Parent, Spouse, LegalDependent, LegalGuardian, FosterChild, FosterParent, ContactDependent, ContactPerson)
-type PersonRelationType string //@name PersonRelationType
+type PersonRelationType string
+
+const (
+	PersonRelationTypeChild            PersonRelationType = "Child"
+	PersonRelationTypeParent           PersonRelationType = "Parent"
+	PersonRelationTypeSpouse           PersonRelationType = "Spouse"
+	PersonRelationTypeLegalDependent   PersonRelationType = "LegalDependent"
+	PersonRelationTypeLegalGuardian    PersonRelationType = "LegalGuardian"
+	PersonRelationTypeFosterChild      PersonRelationType = "FosterChild"
+	PersonRelationTypeFosterParent     PersonRelationType = "FosterParent"
+	PersonRelationTypeContactDependent PersonRelationType = "ContactDependent"
+	PersonRelationTypeContactPerson    PersonRelationType = "ContactPerson"
+)
 
 var PersonPath = "/v2/persons"
 

@@ -1,5 +1,3 @@
-//go:generate go-enum --marshal
-
 package coreapi
 
 import (
@@ -23,8 +21,12 @@ type Consent struct {
 	ValidTo   *time.Time     `json:"validTo"`
 }
 
-// ENUM(DataSharing, Tracking)
 type ConsentPurpose string
+
+const (
+	ConsentPurposeDataSharing ConsentPurpose = "DataSharing"
+	ConsentPurposeTracking    ConsentPurpose = "Tracking"
+)
 
 var ConsentPath = "/consents"
 

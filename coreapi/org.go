@@ -1,5 +1,3 @@
-//go:generate go-enum --marshal
-
 package coreapi
 
 import (
@@ -23,11 +21,20 @@ type Org struct {
 	VisitingAddress Address         `json:"visitingAddress"`
 }
 
-// ENUM(Church, Club, Org)
 type OrgType string
 
-// ENUM(Active, Inactive)
+const (
+	OrgTypeChurch OrgType = "Church"
+	OrgTypeClub   OrgType = "Club"
+	OrgTypeOrg    OrgType = "Org"
+)
+
 type OrgActiveStatus string
+
+const (
+	OrgActiveStatusActive   OrgActiveStatus = "Active"
+	OrgActiveStatusInactive OrgActiveStatus = "Inactive"
+)
 
 var OrgPath = "/v2/orgs"
 

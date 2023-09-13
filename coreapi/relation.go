@@ -1,5 +1,3 @@
-//go:generate go-enum --marshal
-
 package coreapi
 
 import (
@@ -34,8 +32,23 @@ type Relation struct {
 // ENUM(ChildOf, SpouseOf, LegalDependentOf, FosterChildOf, ContactDependentOf)
 type RelationType string
 
-// ENUM(Default, View, Administrate, Represent, None)
-type Grant string //@name GrantType
+const (
+	RelationTypeChildOf            RelationType = "ChildOf"
+	RelationTypeSpouseOf           RelationType = "SpouseOf"
+	RelationTypeLegalDependentOf   RelationType = "LegalDependentOf"
+	RelationTypeFosterChildOf      RelationType = "FosterChildOf"
+	RelationTypeContactDependentOf RelationType = "ContactDependentOf"
+)
+
+type Grant string
+
+const (
+	GrantDefault      Grant = "Default"
+	GrantView         Grant = "View"
+	GrantAdministrate Grant = "Administrate"
+	GrantRepresent    Grant = "Represent"
+	GrantNone         Grant = "None"
+)
 
 var RelationPath = "/relations"
 

@@ -1,5 +1,3 @@
-//go:generate go-enum --marshal
-
 package coreapi
 
 import (
@@ -13,25 +11,22 @@ type Error struct {
 	Message string    `json:"message"`
 }
 
-/*
-ENUM(
+type ErrorCode string
 
-	not-found
-	invalid-query,
-	invalid-body,
-	invalid-key-reference,
-	duplicate-unique-key,
-	cannot-parse-token,
-	invalid-token,
-	missing-scopes,
-	internal-error,
-	unauthorized,
-	invalid-app-uid,
-	unknown-error-response,
-
+const (
+	ErrorCodeNotFound             ErrorCode = "not-found"
+	ErrorCodeInvalidQuery         ErrorCode = "invalid-query"
+	ErrorCodeInvalidBody          ErrorCode = "invalid-body"
+	ErrorCodeInvalidKeyReference  ErrorCode = "invalid-key-reference"
+	ErrorCodeDuplicateUniqueKey   ErrorCode = "duplicate-unique-key"
+	ErrorCodeCannotParseToken     ErrorCode = "cannot-parse-token"
+	ErrorCodeInvalidToken         ErrorCode = "invalid-token"
+	ErrorCodeMissingScopes        ErrorCode = "missing-scopes"
+	ErrorCodeInternalError        ErrorCode = "internal-error"
+	ErrorCodeUnauthorized         ErrorCode = "unauthorized"
+	ErrorCodeInvalidAppUid        ErrorCode = "invalid-app-uid"
+	ErrorCodeUnknownErrorResponse ErrorCode = "unknown-error-response"
 )
-*/
-type ErrorCode string //@name ErrorCode
 
 type ErrorResponse struct {
 	Error Error `json:"error"`

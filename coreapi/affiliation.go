@@ -1,5 +1,3 @@
-//go:generate go-enum --marshal
-
 package coreapi
 
 import (
@@ -23,8 +21,13 @@ type Affiliation struct {
 	ValidTo   *time.Time      `json:"validTo"`
 }
 
-// ENUM(Member, Affiliate, Participant)
 type AffiliationType string
+
+const (
+	AffiliationTypeMember      AffiliationType = "Member"
+	AffiliationTypeAffiliate   AffiliationType = "Affiliate"
+	AffiliationTypeParticipant AffiliationType = "Participant"
+)
 
 var AffiliationPath = "/affiliations"
 

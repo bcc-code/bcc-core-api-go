@@ -1,5 +1,3 @@
-//go:generate go-enum --marshal
-
 package coreapi
 
 import (
@@ -18,8 +16,12 @@ type Role struct {
 	Scope RoleScope `json:"scope"`
 }
 
-// ENUM(Global, Org)
-type RoleScope string //@name RoleScope
+type RoleScope string
+
+const (
+	RoleScopeGlobal RoleScope = "Global"
+	RoleScopeOrg    RoleScope = "Org"
+)
 
 var RolePath = "/roles"
 

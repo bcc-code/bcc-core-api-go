@@ -1,5 +1,3 @@
-//go:generate go-enum --marshal
-
 package coreapi
 
 import (
@@ -23,8 +21,12 @@ type Group struct {
 	Tags   []string   `json:"tags"`
 }
 
-// ENUM( Static, Dynamic )
-type GroupType string // @name GroupType
+type GroupType string
+
+const (
+	GroupTypeStatic  GroupType = "Static"
+	GroupTypeDynamic GroupType = "Dynamic"
+)
 
 type GroupMember struct {
 	Uid             uuid.UUID `json:"uid"`
