@@ -1,3 +1,5 @@
+//go:generate go-enum --marshal
+
 package coreapi
 
 import (
@@ -7,9 +9,29 @@ import (
 )
 
 type Error struct {
-	Code    string `json:"code"`
-	Message string `json:"message"`
+	Code    ErrorCode `json:"code"`
+	Message string    `json:"message"`
 }
+
+/*
+ENUM(
+
+	not-found
+	invalid-query,
+	invalid-body,
+	invalid-key-reference,
+	duplicate-unique-key,
+	cannot-parse-token,
+	invalid-token,
+	missing-scopes,
+	internal-error,
+	unauthorized,
+	invalid-app-uid,
+	unknown-error-response,
+
+)
+*/
+type ErrorCode string //@name ErrorCode
 
 type ErrorResponse struct {
 	Error Error `json:"error"`
@@ -20,7 +42,7 @@ func newError(response *http.Response) error {
 
 	if err := json.NewDecoder(response.Body).Decode(apiError); err != nil {
 		return &Error{
-			Code:    http.StatusText(response.StatusCode),
+			Code:    ErrorCodeUnknownErrorResponse,
 			Message: fmt.Errorf("failed to decode json error response payload: %w", err).Error(),
 		}
 	}

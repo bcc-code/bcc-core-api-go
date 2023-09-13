@@ -8,11 +8,16 @@ import (
 )
 
 func TestNewClient(t *testing.T) {
-	c := New("http://localhost:3010", WithEmulator(context.Background(), ClientCredentialsEnv{
+	c := GetTestClient(PersonsRead)
+
+	token, err := c.tokenSource.Token()
+	assert.NoError(t, err)
+	assert.NotEmpty(t, token.AccessToken)
+}
+
+func GetTestClient(scopes ...string) *Client {
+	return New("http://localhost:3010", WithEmulator(context.Background(), ClientCredentialsEnv{
 		TokenUrl: "http://localhost:3020/token",
 		Audience: "localhost:3020",
-	}, "persons#read"))
-	p, err := c.Person.Find(context.Background())
-	assert.NoError(t, err)
-	assert.NotEmpty(t, p.Data)
+	}, scopes...))
 }

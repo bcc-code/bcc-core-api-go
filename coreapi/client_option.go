@@ -30,7 +30,7 @@ func WithClientCredentials(ctx context.Context, credEnv ClientCredentialsEnv, cl
 }
 
 // WithClientCredentials configures the SDK to authenticate using the client
-// credentials authentication flow.
+// credentials authentication flow against the emulator.
 func WithEmulator(ctx context.Context, credEnv ClientCredentialsEnv, scopes ...string) ClientOption {
 	return func(c *Client) {
 		cfg := &clientcredentials.Config{

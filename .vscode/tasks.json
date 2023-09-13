@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "setup-emulator",
+            "command": "${workspaceFolder}/scripts/setup-emulator.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "release",
+            "command": "${workspaceFolder}/scripts/release.sh",
+            "args": [
+                "${input:version}"
+            ],
+            "problemMatcher": []
+        },
+    ],
+    "inputs": [
+        {
+            "id": "version",
+            "description": "Version to release (X.X.X)",
+            "default": "",
+            "type": "promptString"
+        },
+        
+    ]
+}
