@@ -1,3 +1,3 @@
 package coreapi
 
-var Version = "latest"
+var Version = "0.0.0-alpha.5"
