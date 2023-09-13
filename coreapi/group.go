@@ -51,14 +51,14 @@ func (m *GroupManager) Find(ctx context.Context, opts ...RequestOption) (Respons
 
 var MemberPath = "/members"
 
-func (m *GroupManager) GetMember(ctx context.Context, groupUid uuid.UUID, memberUid uuid.UUID, opts ...RequestOption) (Response[Group], error) {
-	var res Response[Group]
+func (m *GroupManager) GetMember(ctx context.Context, groupUid uuid.UUID, memberUid uuid.UUID, opts ...RequestOption) (Response[GroupMember], error) {
+	var res Response[GroupMember]
 	err := m.client.Request(ctx, http.MethodGet, m.client.URL(GroupPath, groupUid.String(), MemberPath, memberUid.String()), nil, &res, opts...)
 	return res, err
 }
 
-func (m *GroupManager) FindMembers(ctx context.Context, groupUid uuid.UUID, opts ...RequestOption) (ResponseWithMeta[[]Group], error) {
-	var res ResponseWithMeta[[]Group]
+func (m *GroupManager) FindMembers(ctx context.Context, groupUid uuid.UUID, opts ...RequestOption) (ResponseWithMeta[[]GroupMember], error) {
+	var res ResponseWithMeta[[]GroupMember]
 	err := m.client.Request(ctx, http.MethodGet, m.client.URL(GroupPath, groupUid.String(), MemberPath), nil, &res, opts...)
 	return res, err
 }

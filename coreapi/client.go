@@ -17,7 +17,15 @@ type Client struct {
 
 	httpAgent string
 
-	Person *PersonManager
+	Affiliation    *AffiliationManager
+	Consent        *ConsentManager
+	Country        *CountryManager
+	Group          *GroupManager
+	Org            *OrgManager
+	Person         *PersonManager
+	Relation       *RelationManager
+	RoleAssignment *RoleAssignmentManager
+	Role           *RoleManager
 }
 
 type managerBase struct {
@@ -51,7 +59,15 @@ func New(url string, options ...ClientOption) *Client {
 
 	base := &managerBase{c}
 
+	c.Affiliation = (*AffiliationManager)(base)
+	c.Consent = (*ConsentManager)(base)
+	c.Country = (*CountryManager)(base)
+	c.Group = (*GroupManager)(base)
+	c.Org = (*OrgManager)(base)
 	c.Person = (*PersonManager)(base)
+	c.Relation = (*RelationManager)(base)
+	c.RoleAssignment = (*RoleAssignmentManager)(base)
+	c.Role = (*RoleManager)(base)
 
 	return c
 }
@@ -76,5 +92,8 @@ func (w wrappedRoundTripper) RoundTrip(req *http.Request) (*http.Response, error
 	if err != nil {
 		return nil, err
 	}
-	return w.Base.RoundTrip(req)
+	if w.Base != nil {
+		return w.Base.RoundTrip(req)
+	}
+	return http.DefaultTransport.RoundTrip(req)
 }

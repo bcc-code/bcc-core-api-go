@@ -41,9 +41,14 @@ func newError(response *http.Response) error {
 	apiError := &ErrorResponse{}
 
 	if err := json.NewDecoder(response.Body).Decode(apiError); err != nil {
+		err = fmt.Errorf("%d %s:failed to decode json error response payload: %w",
+			response.StatusCode,
+			http.StatusText(response.StatusCode),
+			err,
+		)
 		return &Error{
 			Code:    ErrorCodeUnknownErrorResponse,
-			Message: fmt.Errorf("failed to decode json error response payload: %w", err).Error(),
+			Message: err.Error(),
 		}
 	}
 
