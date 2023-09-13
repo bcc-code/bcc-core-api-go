@@ -30,8 +30,8 @@ import (
 )
 
 func main() {
-	clientID := "EXAMPLE_16L9d34h0qe4NVE6SaHxZEid"
-	clientSecret := "EXAMPLE_XSQGmnt8JdXs23407hrK6XXXXXXX"
+	clientID := "EXAMPLE_CLIENT_ID"
+	clientSecret := "EXAMPLE_CLIENT_SECRET"
 
 	// Initialize a new client using a domain, client ID and client secret.
 	coreAPI, err := coreapi.New(
