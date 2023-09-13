@@ -1,3 +1,5 @@
+//go:generate go-enum --marshal
+
 package coreapi
 
 import (
