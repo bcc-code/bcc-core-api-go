@@ -11,7 +11,7 @@ import (
 var TestConsentUid = uuid.MustParse("6026dbaa-ed8e-4fc8-993f-8ce377b4cfee")
 
 func TestGetConsent(t *testing.T) {
-	c := GetTestClient(PersonsRead, PersonConsentsRead)
+	c := GetTestClient(ScopePersonsRead, ScopePersonConsentsRead)
 
 	res, err := c.Consent.Get(context.Background(), TestConsentUid, Fields("*", "person.*"))
 
@@ -21,7 +21,7 @@ func TestGetConsent(t *testing.T) {
 }
 
 func TestFindConsent(t *testing.T) {
-	c := GetTestClient(PersonConsentsRead)
+	c := GetTestClient(ScopePersonConsentsRead)
 
 	res, err := c.Consent.Find(context.Background(), Limit(2))
 

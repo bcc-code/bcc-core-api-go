@@ -11,7 +11,7 @@ import (
 var TestAffiliationUid = uuid.MustParse("8c743b8c-751b-4a76-b48d-92823cd3c44a")
 
 func TestGetAffiliation(t *testing.T) {
-	c := GetTestClient(PersonsRead, PersonAffiliationsRead)
+	c := GetTestClient(ScopePersonsRead, ScopePersonAffiliationsRead)
 
 	res, err := c.Affiliation.Get(context.Background(), TestAffiliationUid, Fields("*", "person.*"))
 
@@ -21,7 +21,7 @@ func TestGetAffiliation(t *testing.T) {
 }
 
 func TestFindAffiliation(t *testing.T) {
-	c := GetTestClient(PersonAffiliationsRead)
+	c := GetTestClient(ScopePersonAffiliationsRead)
 
 	res, err := c.Affiliation.Find(context.Background(), Limit(2))
 

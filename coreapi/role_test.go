@@ -11,7 +11,7 @@ import (
 var TestRoleUid = uuid.MustParse("47b2dd20-d31c-4b07-8837-647ea8ee0f7d")
 
 func TestGetRole(t *testing.T) {
-	c := GetTestClient(RolesRead)
+	c := GetTestClient(ScopeRolesRead)
 
 	res, err := c.Role.Get(context.Background(), TestRoleUid)
 
@@ -20,7 +20,7 @@ func TestGetRole(t *testing.T) {
 }
 
 func TestFindRole(t *testing.T) {
-	c := GetTestClient(RolesRead)
+	c := GetTestClient(ScopeRolesRead)
 
 	res, err := c.Role.Find(context.Background(), Limit(2))
 

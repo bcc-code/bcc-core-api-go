@@ -12,7 +12,7 @@ var TestGroupUid = uuid.MustParse("e88e4a8d-558a-4dfd-8e9e-389522ade4e0")
 var TestGroupMemberUid = uuid.MustParse("603ee270-ca1f-41da-9349-944b0fa53a64")
 
 func TestGetGroup(t *testing.T) {
-	c := GetTestClient(PersonsRead, GroupsRead)
+	c := GetTestClient(ScopePersonsRead, ScopeGroupsRead)
 
 	res, err := c.Group.Get(context.Background(), TestGroupUid)
 
@@ -21,7 +21,7 @@ func TestGetGroup(t *testing.T) {
 }
 
 func TestFindGroup(t *testing.T) {
-	c := GetTestClient(GroupsRead)
+	c := GetTestClient(ScopeGroupsRead)
 
 	res, err := c.Group.Find(context.Background(), Limit(2))
 
@@ -30,7 +30,7 @@ func TestFindGroup(t *testing.T) {
 }
 
 func TestGetGroupMember(t *testing.T) {
-	c := GetTestClient(PersonsRead, GroupsRead)
+	c := GetTestClient(ScopePersonsRead, ScopeGroupsRead)
 
 	res, err := c.Group.GetMember(context.Background(), TestGroupUid, TestGroupMemberUid)
 
@@ -39,7 +39,7 @@ func TestGetGroupMember(t *testing.T) {
 }
 
 func TestGetFindMembers(t *testing.T) {
-	c := GetTestClient(PersonsRead, GroupsRead)
+	c := GetTestClient(ScopePersonsRead, ScopeGroupsRead)
 
 	res, err := c.Group.FindMembers(context.Background(), TestGroupUid, Limit(2))
 

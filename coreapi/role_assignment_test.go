@@ -11,7 +11,7 @@ import (
 var TestRoleAssignmentUid = uuid.MustParse("fff50a49-3413-4d1e-a99d-da66a45b7cd5")
 
 func TestGetRoleAssignment(t *testing.T) {
-	c := GetTestClient(PersonsRead, PersonRoleAssignmentsRead)
+	c := GetTestClient(ScopePersonsRead, ScopePersonRoleAssignmentsRead)
 
 	res, err := c.RoleAssignment.Get(context.Background(), TestRoleAssignmentUid)
 
@@ -20,7 +20,7 @@ func TestGetRoleAssignment(t *testing.T) {
 }
 
 func TestFindRoleAssignment(t *testing.T) {
-	c := GetTestClient(PersonRoleAssignmentsRead)
+	c := GetTestClient(ScopePersonRoleAssignmentsRead)
 
 	res, err := c.RoleAssignment.Find(context.Background(), Limit(2))
 

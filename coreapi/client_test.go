@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewClient(t *testing.T) {
-	c := GetTestClient(PersonsRead)
+	c := GetTestClient(ScopePersonsRead)
 
 	token, err := c.tokenSource.Token()
 	assert.NoError(t, err)

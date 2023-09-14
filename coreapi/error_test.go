@@ -15,19 +15,19 @@ func TestCannotParseToken(t *testing.T) {
 }
 
 func TestMissingScopes(t *testing.T) {
-	c := GetTestClient(OrgsRead)
+	c := GetTestClient(ScopeOrgsRead)
 	_, err := c.Person.Find(context.Background())
 	assertErrType(t, err, ErrorCodeMissingScopes)
 }
 
 func TestNotFound(t *testing.T) {
-	c := GetTestClient(PersonsRead)
+	c := GetTestClient(ScopePersonsRead)
 	_, err := c.Person.Get(context.Background(), uuid.New())
 	assertErrType(t, err, ErrorCodeNotFound)
 }
 
 func TestInvalidQuery(t *testing.T) {
-	c := GetTestClient(PersonsRead)
+	c := GetTestClient(ScopePersonsRead)
 	_, err := c.Person.Find(context.Background(), Fields("invalid"))
 	assertErrType(t, err, ErrorCodeInvalidQuery)
 }

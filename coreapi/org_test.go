@@ -11,7 +11,7 @@ import (
 var TestOrgUid = uuid.MustParse("9e0b8d03-9799-416d-a70b-6da9f2e1ab48")
 
 func TestGetOrg(t *testing.T) {
-	c := GetTestClient(PersonsRead, OrgsRead)
+	c := GetTestClient(ScopePersonsRead, ScopeOrgsRead)
 
 	res, err := c.Org.Get(context.Background(), TestOrgUid)
 
@@ -20,7 +20,7 @@ func TestGetOrg(t *testing.T) {
 }
 
 func TestFindOrg(t *testing.T) {
-	c := GetTestClient(OrgsRead)
+	c := GetTestClient(ScopeOrgsRead)
 
 	res, err := c.Org.Find(context.Background(), Limit(2))
 

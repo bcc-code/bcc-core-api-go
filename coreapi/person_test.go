@@ -12,7 +12,7 @@ import (
 var TestPersonUid = uuid.MustParse("657a66ca-9cd0-4b61-9476-697016e26fbc")
 
 func TestGetPerson(t *testing.T) {
-	c := GetTestClient(PersonsRead)
+	c := GetTestClient(ScopePersonsRead)
 
 	res, err := c.Person.Get(context.Background(), TestPersonUid)
 
@@ -21,7 +21,7 @@ func TestGetPerson(t *testing.T) {
 }
 
 func TestGetPersonNotFound(t *testing.T) {
-	c := GetTestClient(PersonsRead)
+	c := GetTestClient(ScopePersonsRead)
 
 	_, err := c.Person.Get(context.Background(), uuid.New())
 
@@ -31,7 +31,7 @@ func TestGetPersonNotFound(t *testing.T) {
 }
 
 func TestGetPersonResolveFields(t *testing.T) {
-	c := GetTestClient(PersonsRead, OrgsRead)
+	c := GetTestClient(ScopePersonsRead, ScopeOrgsRead)
 
 	res, err := c.Person.Get(context.Background(), TestPersonUid, Fields("*", "affiliations.*", "affiliations.org.name"))
 
@@ -43,7 +43,7 @@ func TestGetPersonResolveFields(t *testing.T) {
 }
 
 func TestFindPerson(t *testing.T) {
-	c := GetTestClient(PersonsRead, OrgsRead)
+	c := GetTestClient(ScopePersonsRead, ScopeOrgsRead)
 
 	res, err := c.Person.Find(context.Background())
 
@@ -52,7 +52,7 @@ func TestFindPerson(t *testing.T) {
 }
 
 func TestFindPersonFilter(t *testing.T) {
-	c := GetTestClient(PersonsRead, OrgsRead)
+	c := GetTestClient(ScopePersonsRead, ScopeOrgsRead)
 
 	res, err := c.Person.Find(context.Background(), Filter(fmt.Sprintf(`{"uid": {"_eq": "%s"}}`, TestPersonUid)))
 
