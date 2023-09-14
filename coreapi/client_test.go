@@ -15,7 +15,7 @@ func TestNewClient(t *testing.T) {
 	assert.NotEmpty(t, token.AccessToken)
 }
 
-func GetTestClient(scopes ...string) *Client {
+func GetTestClient(scopes ...Scope) *Client {
 	return New("http://localhost:3010", WithEmulator(context.Background(), ClientCredentialsEnv{
 		TokenUrl: "http://localhost:3020/token",
 		Audience: "localhost:3020",

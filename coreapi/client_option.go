@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/samber/lo"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
 )
@@ -13,13 +14,13 @@ type ClientOption func(*Client)
 
 // WithClientCredentials configures the SDK to authenticate using the client
 // credentials authentication flow.
-func WithClientCredentials(ctx context.Context, credEnv ClientCredentialsEnv, clientID, clientSecret string, scopes ...string) ClientOption {
+func WithClientCredentials(ctx context.Context, credEnv ClientCredentialsEnv, clientID, clientSecret string, scopes ...Scope) ClientOption {
 	return func(c *Client) {
 		cfg := &clientcredentials.Config{
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
 			TokenURL:     credEnv.TokenUrl,
-			Scopes:       scopes,
+			Scopes:       scopesToStrings(scopes),
 			EndpointParams: url.Values{
 				"audience": []string{credEnv.Audience},
 			},
@@ -29,15 +30,21 @@ func WithClientCredentials(ctx context.Context, credEnv ClientCredentialsEnv, cl
 	}
 }
 
+func scopesToStrings(scopes []Scope) []string {
+	return lo.Map(scopes, func(s Scope, _ int) string {
+		return string(s)
+	})
+}
+
 // WithClientCredentials configures the SDK to authenticate using the client
 // credentials authentication flow against the emulator.
-func WithEmulator(ctx context.Context, credEnv ClientCredentialsEnv, scopes ...string) ClientOption {
+func WithEmulator(ctx context.Context, credEnv ClientCredentialsEnv, scopes ...Scope) ClientOption {
 	return func(c *Client) {
 		cfg := &clientcredentials.Config{
 			ClientID:     "",
 			ClientSecret: "",
 			TokenURL:     credEnv.TokenUrl,
-			Scopes:       scopes,
+			Scopes:       scopesToStrings(scopes),
 			EndpointParams: url.Values{
 				"audience":      []string{credEnv.Audience},
 				"custom_claims": []string{`{"orgs": "-"}`},
