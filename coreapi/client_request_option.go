@@ -62,7 +62,7 @@ func Filter(filter string) RequestOption {
 type QueryOpts struct {
 	IncludePersonsWithoutChurchAffiliation bool     `json:"includePersonsWithoutChurchAffiliation"`
 	IncludeInactive                        []string `json:"includeInactive"`
-	OrgUids                                []uuid.UUID
+	OrgUIDs                                []uuid.UUID
 }
 
 func QueryOptions(q QueryOpts) RequestOption {

@@ -47,7 +47,7 @@ func WithEmulator(ctx context.Context, credEnv ClientCredentialsEnv, scopes ...S
 			Scopes:       scopesToStrings(scopes),
 			EndpointParams: url.Values{
 				"audience":      []string{credEnv.Audience},
-				"custom_claims": []string{`{"orgs": "-"}`},
+				"custom_claims": []string{`{"orgs": "-", "app_uid": "990dc470-c4f4-429e-a11e-f094cb1cf7c0"}`},
 			},
 		}
 

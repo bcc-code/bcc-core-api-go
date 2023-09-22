@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/google/uuid"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -15,19 +15,20 @@ func TestCannotParseToken(t *testing.T) {
 }
 
 func TestMissingScopes(t *testing.T) {
-	c := GetTestClient(ScopeOrgsRead)
+	c := getClientForTests(t, ScopeOrgsRead)
 	_, err := c.Person.Find(context.Background())
 	assertErrType(t, err, ErrorCodeMissingScopes)
 }
 
 func TestNotFound(t *testing.T) {
-	c := GetTestClient(ScopePersonsRead)
-	_, err := c.Person.Get(context.Background(), uuid.New())
+	c := getClientForTests(t, ScopePersonsRead)
+	const randomUUID strfmt.UUID = "7ae77f10-c4fb-4b7a-b0c5-ded2c121de4a"
+	_, err := c.Person.Get(context.Background(), randomUUID)
 	assertErrType(t, err, ErrorCodeNotFound)
 }
 
 func TestInvalidQuery(t *testing.T) {
-	c := GetTestClient(ScopePersonsRead)
+	c := getClientForTests(t, ScopePersonsRead)
 	_, err := c.Person.Find(context.Background(), Fields("invalid"))
 	assertErrType(t, err, ErrorCodeInvalidQuery)
 }
