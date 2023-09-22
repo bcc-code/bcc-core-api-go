@@ -10,6 +10,7 @@ import (
 	"net/url"
 )
 
+// Joins provided url parts with the base url to build the endpoint for calling
 func (c *Client) URL(parts ...string) string {
 	path, _ := url.JoinPath(c.apiUrl, parts...)
 	return path
@@ -62,6 +63,8 @@ func (m *Client) Do(req *http.Request) (*http.Response, error) {
 }
 
 // Request combines NewRequest and Do, while also handling decoding of response payload.
+//
+// Can be used to provide a custom payload type for a request
 func (m *Client) Request(ctx context.Context, method, uri string, payload any, result any, options ...RequestOption) error {
 	request, err := m.NewRequest(ctx, method, uri, payload, options...)
 	if err != nil {
