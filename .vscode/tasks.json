@@ -14,12 +14,28 @@
             ],
             "problemMatcher": []
         },
+
+        {
+            "label": "generate-models",
+            "command": "${workspaceFolder}/scripts/generate-models.sh",
+            "args": [
+                "${input:swagger-path}"
+            ],
+            "problemMatcher": []
+        },
     ],
     "inputs": [
         {
             "id": "version",
             "description": "Version to release (X.X.X)",
             "default": "",
+            "type": "promptString"
+        },
+
+        {
+            "id": "swagger-path",
+            "description": "Path to the swagger file",
+            "default": "../bcc-core-api/server/src/docs/swagger.json",
             "type": "promptString"
         },
         
