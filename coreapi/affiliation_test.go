@@ -12,7 +12,7 @@ import (
 )
 
 func TestGetAffiliation(t *testing.T) {
-	c := GetTestClient(ScopePersonsRead, ScopePersonAffiliationsRead)
+	c := getClientForTests(t, ScopePersonsRead, ScopePersonAffiliationsRead)
 
 	res, err := c.Affiliation.Get(context.Background(), TestAffiliationUID, Fields("*", "person.*"))
 
@@ -22,7 +22,7 @@ func TestGetAffiliation(t *testing.T) {
 }
 
 func TestFindAffiliation(t *testing.T) {
-	c := GetTestClient(ScopePersonAffiliationsRead)
+	c := getClientForTests(t, ScopePersonAffiliationsRead)
 
 	res, err := c.Affiliation.Find(context.Background(), Limit(2))
 
@@ -31,13 +31,13 @@ func TestFindAffiliation(t *testing.T) {
 }
 
 func TestCreateAffiliation(t *testing.T) {
-	c := GetTestClient(ScopePersonAffiliationsWrite)
+	c := getClientForTests(t, ScopePersonAffiliationsWrite)
 
 	body := models.AffiliationWrite{
 		OrgUID:    lo.ToPtr(TestOrgUID),
 		PersonUID: lo.ToPtr(TestPersonUID),
 		Type:      models.AffiliationTypeAffiliate.Pointer(),
-		ValidFrom: lo.ToPtr(strfmt.DateTime(time.Now())),
+		ValidFrom: lo.ToPtr(strfmt.DateTime(time.Now().Truncate(time.Millisecond))),
 	}
 
 	res, err := c.Affiliation.Create(context.Background(), body)
@@ -48,12 +48,13 @@ func TestCreateAffiliation(t *testing.T) {
 	assert.Equal(t, body.OrgUID, res.Data.OrgUID)
 	assert.Equal(t, body.PersonUID, res.Data.PersonUID)
 	assert.Equal(t, body.Type, res.Data.Type)
-	assert.Less(t, time.Time(*body.ValidFrom).Sub(time.Time(*res.Data.ValidFrom)), time.Millisecond)
-	assert.Equal(t, body.ValidTo, res.Data.ValidTo)
+
+	assert.True(t, body.ValidFrom.Equal(*res.Data.ValidFrom))
+	assert.Nil(t, body.ValidTo)
 }
 
 func TestUpdateAffiliation(t *testing.T) {
-	c := GetTestClient(ScopePersonAffiliationsWrite, ScopePersonAffiliationsRead)
+	c := getClientForTests(t, ScopePersonAffiliationsWrite, ScopePersonAffiliationsRead)
 
 	currentAff, err := c.Affiliation.Get(context.Background(), TestAffiliationUID)
 	assert.NoError(t, err)
@@ -63,7 +64,7 @@ func TestUpdateAffiliation(t *testing.T) {
 		PersonUID: currentAff.Data.PersonUID,
 		Type:      currentAff.Data.Type,
 		ValidFrom: currentAff.Data.ValidFrom,
-		ValidTo:   lo.ToPtr(strfmt.DateTime(time.Now())),
+		ValidTo:   lo.ToPtr(strfmt.DateTime(time.Now().Truncate(time.Millisecond))),
 	}
 
 	res, err := c.Affiliation.Update(context.Background(), TestAffiliationUID, body)
@@ -74,6 +75,7 @@ func TestUpdateAffiliation(t *testing.T) {
 	assert.Equal(t, body.OrgUID, res.Data.OrgUID)
 	assert.Equal(t, body.PersonUID, res.Data.PersonUID)
 	assert.Equal(t, body.Type, res.Data.Type)
-	assert.Less(t, time.Time(*body.ValidFrom).Sub(time.Time(*res.Data.ValidFrom)), time.Millisecond)
-	assert.Less(t, time.Time(*body.ValidTo).Sub(time.Time(*res.Data.ValidTo)), time.Millisecond)
+
+	assert.True(t, body.ValidFrom.Equal(*res.Data.ValidFrom))
+	assert.True(t, body.ValidTo.Equal(*res.Data.ValidTo))
 }

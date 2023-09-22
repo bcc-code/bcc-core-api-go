@@ -8,16 +8,20 @@ import (
 )
 
 func TestNewClient(t *testing.T) {
-	c := GetTestClient(ScopePersonsRead)
+	c := getClientForTests(t, ScopePersonsRead)
 
 	token, err := c.tokenSource.Token()
 	assert.NoError(t, err)
 	assert.NotEmpty(t, token.AccessToken)
 }
 
-func GetTestClient(scopes ...Scope) *Client {
-	return New("http://localhost:3010", WithEmulator(context.Background(), ClientCredentialsEnv{
+func getClientForTests(t *testing.T, scopes ...Scope) *Client {
+	c := New("http://localhost:3010", WithEmulator(context.Background(), ClientCredentialsEnv{
 		TokenUrl: "http://localhost:3020/token",
 		Audience: "localhost:3020",
 	}, scopes...))
+
+	t.Cleanup(func() { c.RefreshTestData() })
+
+	return c
 }

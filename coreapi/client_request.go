@@ -84,8 +84,10 @@ func (m *Client) Request(ctx context.Context, method, uri string, payload any, r
 		return fmt.Errorf("failed to read the response body: %w", err)
 	}
 
-	if err = json.Unmarshal(responseBody, result); err != nil {
-		return fmt.Errorf("failed to unmarshal response payload: %w", err)
+	if result != nil {
+		if err = json.Unmarshal(responseBody, result); err != nil {
+			return fmt.Errorf("failed to unmarshal response payload: %w", err)
+		}
 	}
 
 	return nil

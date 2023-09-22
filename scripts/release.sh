@@ -11,7 +11,7 @@
 # pushes both to GitHub.
 
 # The file holding a version variable.
-VERSION_FILE=coreapi/meta.go
+VERSION_FILE=coreapi/version.go
 
 function create_release_branch {
   local version="$1"

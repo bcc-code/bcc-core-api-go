@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetRole(t *testing.T) {
-	c := GetTestClient(ScopeRolesRead)
+	c := getClientForTests(t, ScopeRolesRead)
 
 	res, err := c.Role.Get(context.Background(), TestRoleUID)
 
@@ -17,7 +17,7 @@ func TestGetRole(t *testing.T) {
 }
 
 func TestFindRole(t *testing.T) {
-	c := GetTestClient(ScopeRolesRead)
+	c := getClientForTests(t, ScopeRolesRead)
 
 	res, err := c.Role.Find(context.Background(), Limit(2))
 
