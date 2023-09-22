@@ -4,19 +4,19 @@ import (
 	"context"
 	"testing"
 
-	"github.com/google/uuid"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
 
-var TestRelationUid = uuid.MustParse("3a0c7609-bd9e-4f1e-a5b2-e8471ebc7b92")
+const TestRelationUID strfmt.UUID = "3a0c7609-bd9e-4f1e-a5b2-e8471ebc7b92"
 
 func TestGetRelation(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead, ScopePersonRelationsRead)
 
-	res, err := c.Relation.Get(context.Background(), TestRelationUid)
+	res, err := c.Relation.Get(context.Background(), TestRelationUID)
 
 	assert.NoError(t, err)
-	assert.Equal(t, TestRelationUid, res.Data.Uid)
+	assert.Equal(t, TestRelationUID, *res.Data.UID)
 }
 
 func TestFindRelation(t *testing.T) {

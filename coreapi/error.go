@@ -24,7 +24,7 @@ const (
 	ErrorCodeMissingScopes        ErrorCode = "missing-scopes"
 	ErrorCodeInternalError        ErrorCode = "internal-error"
 	ErrorCodeUnauthorized         ErrorCode = "unauthorized"
-	ErrorCodeInvalidAppUid        ErrorCode = "invalid-app-uid"
+	ErrorCodeInvalidAppUID        ErrorCode = "invalid-app-uid"
 	ErrorCodeUnknownErrorResponse ErrorCode = "unknown-error-response"
 )
 

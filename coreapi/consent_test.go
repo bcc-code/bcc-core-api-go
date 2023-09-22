@@ -4,20 +4,20 @@ import (
 	"context"
 	"testing"
 
-	"github.com/google/uuid"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
 
-var TestConsentUid = uuid.MustParse("6026dbaa-ed8e-4fc8-993f-8ce377b4cfee")
+const TestConsentUID strfmt.UUID = "6026dbaa-ed8e-4fc8-993f-8ce377b4cfee"
 
 func TestGetConsent(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead, ScopePersonConsentsRead)
 
-	res, err := c.Consent.Get(context.Background(), TestConsentUid, Fields("*", "person.*"))
+	res, err := c.Consent.Get(context.Background(), TestConsentUID, Fields("*", "person.*"))
 
 	assert.NoError(t, err)
-	assert.Equal(t, TestConsentUid, res.Data.Uid)
-	assert.NotZero(t, TestPersonUid, res.Data.Person)
+	assert.Equal(t, TestConsentUID, *res.Data.UID)
+	assert.NotZero(t, TestPersonUID, res.Data.Person)
 }
 
 func TestFindConsent(t *testing.T) {

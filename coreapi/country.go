@@ -3,33 +3,23 @@ package coreapi
 import (
 	"context"
 	"net/http"
-	"time"
 
-	"github.com/google/uuid"
+	"github.com/bcc-code/bcc-core-api-go/models"
+	"github.com/go-openapi/strfmt"
 )
-
-type Country struct {
-	Uid             uuid.UUID `json:"uid"`
-	LastChangedDate time.Time `json:"lastChangedDate"`
-
-	Iso2Code   string `json:"iso2Code"`
-	NameEn     string `json:"nameEn"`
-	NameNative string `json:"nameNative"`
-	NameNo     string `json:"nameNo"`
-}
 
 var CountryPath = "/countries"
 
 type CountryManager managerBase
 
-func (m *CountryManager) Get(ctx context.Context, uid uuid.UUID, opts ...RequestOption) (Response[Country], error) {
-	var res Response[Country]
+func (m *CountryManager) Get(ctx context.Context, uid strfmt.UUID, opts ...RequestOption) (models.WrappedCountry, error) {
+	var res models.WrappedCountry
 	err := m.client.Request(ctx, http.MethodGet, m.client.URL(CountryPath, uid.String()), nil, &res, opts...)
 	return res, err
 }
 
-func (m *CountryManager) Find(ctx context.Context, opts ...RequestOption) (ResponseWithMeta[[]Country], error) {
-	var res ResponseWithMeta[[]Country]
+func (m *CountryManager) Find(ctx context.Context, opts ...RequestOption) (models.WrappedWithMetaArrayCountry, error) {
+	var res models.WrappedWithMetaArrayCountry
 	err := m.client.Request(ctx, http.MethodGet, m.client.URL(CountryPath), nil, &res, opts...)
 	return res, err
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/google/uuid"
+	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -22,7 +22,8 @@ func TestMissingScopes(t *testing.T) {
 
 func TestNotFound(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead)
-	_, err := c.Person.Get(context.Background(), uuid.New())
+	const randomUUID strfmt.UUID = "7ae77f10-c4fb-4b7a-b0c5-ded2c121de4a"
+	_, err := c.Person.Get(context.Background(), randomUUID)
 	assertErrType(t, err, ErrorCodeNotFound)
 }
 

@@ -3,37 +3,23 @@ package coreapi
 import (
 	"context"
 	"net/http"
-	"time"
 
-	"github.com/google/uuid"
+	"github.com/bcc-code/bcc-core-api-go/models"
+	"github.com/go-openapi/strfmt"
 )
-
-type RoleAssignment struct {
-	Uid             uuid.UUID `json:"uid"`
-	LastChangedDate time.Time `json:"lastChangedDate"`
-	Person          *Person   `json:"person"`
-	Role            *Role     `json:"role"`
-	Org             *Org      `json:"org"`
-
-	PersonUid uuid.UUID  `json:"personUid"`
-	RoleUid   uuid.UUID  `json:"roleUid"`
-	OrgUid    *uuid.UUID `json:"orgUid"`
-	ValidFrom time.Time  `json:"validFrom"`
-	ValidTo   *time.Time `json:"validTo"`
-}
 
 var RoleAssignmentPath = "/roleAssignments"
 
 type RoleAssignmentManager managerBase
 
-func (m *RoleAssignmentManager) Get(ctx context.Context, uid uuid.UUID, opts ...RequestOption) (Response[RoleAssignment], error) {
-	var res Response[RoleAssignment]
+func (m *RoleAssignmentManager) Get(ctx context.Context, uid strfmt.UUID, opts ...RequestOption) (models.WrappedRoleAssignment, error) {
+	var res models.WrappedRoleAssignment
 	err := m.client.Request(ctx, http.MethodGet, m.client.URL(RoleAssignmentPath, uid.String()), nil, &res, opts...)
 	return res, err
 }
 
-func (m *RoleAssignmentManager) Find(ctx context.Context, opts ...RequestOption) (ResponseWithMeta[[]RoleAssignment], error) {
-	var res ResponseWithMeta[[]RoleAssignment]
+func (m *RoleAssignmentManager) Find(ctx context.Context, opts ...RequestOption) (models.WrappedWithMetaArrayRoleAssignment, error) {
+	var res models.WrappedWithMetaArrayRoleAssignment
 	err := m.client.Request(ctx, http.MethodGet, m.client.URL(RoleAssignmentPath), nil, &res, opts...)
 	return res, err
 }
