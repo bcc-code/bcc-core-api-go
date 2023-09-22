@@ -4,11 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
-
-const TestRoleAssignmentUID strfmt.UUID = "fff50a49-3413-4d1e-a99d-da66a45b7cd5"
 
 func TestGetRoleAssignment(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead, ScopePersonRoleAssignmentsRead)

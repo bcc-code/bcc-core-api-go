@@ -21,9 +21,7 @@ type OrgWrite struct {
 
 	// active status
 	// Required: true
-	ActiveStatus struct {
-		OrgActiveStatus
-	} `json:"activeStatus"`
+	ActiveStatus OrgActiveStatus `json:"activeStatus"`
 
 	// billing address
 	BillingAddress *Address `json:"billingAddress,omitempty"`
@@ -43,9 +41,7 @@ type OrgWrite struct {
 
 	// type
 	// Required: true
-	Type struct {
-		OrgType
-	} `json:"type"`
+	Type OrgType `json:"type"`
 
 	// visiting address
 	VisitingAddress *Address `json:"visitingAddress,omitempty"`

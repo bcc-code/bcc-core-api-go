@@ -10,30 +10,32 @@ import (
 
 var GroupPath = "/groups"
 
-type GroupManager managerBase
-
-func (m *GroupManager) Get(ctx context.Context, uid strfmt.UUID, opts ...RequestOption) (models.WrappedGroup, error) {
-	var res models.WrappedGroup
-	err := m.client.Request(ctx, http.MethodGet, m.client.URL(GroupPath, uid.String()), nil, &res, opts...)
-	return res, err
+type GroupClient struct {
+	genericClient[models.Group, models.GroupWrite]
 }
 
-func (m *GroupManager) Find(ctx context.Context, opts ...RequestOption) (models.WrappedWithMetaArrayGroup, error) {
-	var res models.WrappedWithMetaArrayGroup
-	err := m.client.Request(ctx, http.MethodGet, m.client.URL(GroupPath), nil, &res, opts...)
-	return res, err
-}
+const MemberPath = "/members"
 
-var MemberPath = "/members"
-
-func (m *GroupManager) GetMember(ctx context.Context, groupUID strfmt.UUID, memberUID strfmt.UUID, opts ...RequestOption) (models.WrappedGroupMember, error) {
-	var res models.WrappedGroupMember
+func (m *GroupClient) GetMember(ctx context.Context, groupUID strfmt.UUID, memberUID strfmt.UUID, opts ...RequestOption) (models.Wrapped[models.GroupMember], error) {
+	var res models.Wrapped[models.GroupMember]
 	err := m.client.Request(ctx, http.MethodGet, m.client.URL(GroupPath, groupUID.String(), MemberPath, memberUID.String()), nil, &res, opts...)
 	return res, err
 }
 
-func (m *GroupManager) FindMembers(ctx context.Context, groupUID strfmt.UUID, opts ...RequestOption) (models.WrappedWithMetaArrayGroupMember, error) {
-	var res models.WrappedWithMetaArrayGroupMember
+func (m *GroupClient) FindMembers(ctx context.Context, groupUID strfmt.UUID, opts ...RequestOption) (models.WrappedWithMeta[[]models.GroupMember], error) {
+	var res models.WrappedWithMeta[[]models.GroupMember]
 	err := m.client.Request(ctx, http.MethodGet, m.client.URL(GroupPath, groupUID.String(), MemberPath), nil, &res, opts...)
+	return res, err
+}
+
+func (m *GroupClient) AddMember(ctx context.Context, groupUID strfmt.UUID, member models.GroupMemberWrite, opts ...RequestOption) (models.Wrapped[models.GroupMember], error) {
+	var res models.Wrapped[models.GroupMember]
+	err := m.client.Request(ctx, http.MethodGet, m.client.URL(GroupPath, groupUID.String(), MemberPath), member, &res, opts...)
+	return res, err
+}
+
+func (m *GroupClient) RemoveMember(ctx context.Context, groupUID strfmt.UUID, memberUID strfmt.UUID, opts ...RequestOption) (models.Wrapped[models.GroupMember], error) {
+	var res models.Wrapped[models.GroupMember]
+	err := m.client.Request(ctx, http.MethodGet, m.client.URL(GroupPath, groupUID.String(), MemberPath, memberUID.String()), nil, &res, opts...)
 	return res, err
 }

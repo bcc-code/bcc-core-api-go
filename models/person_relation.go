@@ -37,9 +37,7 @@ type PersonRelation struct {
 
 	// Type of relation, defined as {target} is {type} of {origin}
 	// Required: true
-	Type struct {
-		PersonRelationType
-	} `json:"type"`
+	Type PersonRelationType `json:"type"`
 
 	// valid from
 	// Required: true

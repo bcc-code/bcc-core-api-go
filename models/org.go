@@ -21,9 +21,7 @@ type Org struct {
 
 	// active status
 	// Required: true
-	ActiveStatus struct {
-		OrgActiveStatus
-	} `json:"activeStatus"`
+	ActiveStatus OrgActiveStatus `json:"activeStatus"`
 
 	// billing address
 	BillingAddress *Address `json:"billingAddress,omitempty"`
@@ -52,9 +50,7 @@ type Org struct {
 
 	// type
 	// Required: true
-	Type struct {
-		OrgType
-	} `json:"type"`
+	Type OrgType `json:"type"`
 
 	// uid
 	// Required: true

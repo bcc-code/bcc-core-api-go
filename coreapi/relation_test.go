@@ -4,11 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
-
-const TestRelationUID strfmt.UUID = "3a0c7609-bd9e-4f1e-a5b2-e8471ebc7b92"
 
 func TestGetRelation(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead, ScopePersonRelationsRead)

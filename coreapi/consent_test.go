@@ -4,11 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
-
-const TestConsentUID strfmt.UUID = "6026dbaa-ed8e-4fc8-993f-8ce377b4cfee"
 
 func TestGetConsent(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead, ScopePersonConsentsRead)

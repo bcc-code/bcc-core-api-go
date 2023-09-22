@@ -23,4 +23,14 @@ const (
 	ScopeCountriesRead             Scope = "countries#read"
 	ScopeRolesRead                 Scope = "roles#read"
 	ScopeGroupsRead                Scope = "groups#read"
+
+	ScopePersonsWrite               Scope = "persons#write"
+	ScopePersonAffiliationsWrite    Scope = "persons.affiliations#write"
+	ScopePersonRelationsWrite       Scope = "persons.relations#write"
+	ScopePersonConsentsWrite        Scope = "persons.consents#write"
+	ScopePersonRoleAssignmentsWrite Scope = "persons.role_assignments#write"
+	ScopeOrgsWrite                  Scope = "orgs#write"
+	ScopeCountriesWrite             Scope = "countries#write"
+	ScopeRolesWrite                 Scope = "roles#write"
+	ScopeGroupsWrite                Scope = "groups#write"
 )

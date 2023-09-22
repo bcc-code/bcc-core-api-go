@@ -4,12 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
-
-const TestGroupUID strfmt.UUID = "e88e4a8d-558a-4dfd-8e9e-389522ade4e0"
-const TestGroupMemberUID strfmt.UUID = "603ee270-ca1f-41da-9349-944b0fa53a64"
 
 func TestGetGroup(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead, ScopeGroupsRead)

@@ -39,9 +39,7 @@ type RelationWrite struct {
 
 	// Type of the relation, defined as {origin} is {type} (of) {target}
 	// Required: true
-	Type struct {
-		RelationType
-	} `json:"type"`
+	Type RelationType `json:"type"`
 
 	// valid from
 	// Required: true

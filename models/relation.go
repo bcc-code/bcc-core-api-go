@@ -21,13 +21,11 @@ type Relation struct {
 
 	// Permission of target on origin
 	// Required: true
-	GrantToOrigin *GrantType `json:"grantToOrigin"`
+	GrantToOrigin GrantType `json:"grantToOrigin"`
 
 	// Permission of origin on target
 	// Required: true
-	GrantToTarget struct {
-		GrantType
-	} `json:"grantToTarget"`
+	GrantToTarget GrantType `json:"grantToTarget"`
 
 	// last changed date
 	// Required: true
@@ -52,9 +50,7 @@ type Relation struct {
 
 	// Type of the relation, defined as {origin} is {type} (of) {target}
 	// Required: true
-	Type struct {
-		RelationType
-	} `json:"type"`
+	Type RelationType `json:"type"`
 
 	// uid
 	// Required: true
@@ -126,25 +122,6 @@ func (m *Relation) Validate(formats strfmt.Registry) error {
 }
 
 func (m *Relation) validateGrantToOrigin(formats strfmt.Registry) error {
-
-	if err := validate.Required("grantToOrigin", "body", m.GrantToOrigin); err != nil {
-		return err
-	}
-
-	if err := validate.Required("grantToOrigin", "body", m.GrantToOrigin); err != nil {
-		return err
-	}
-
-	if m.GrantToOrigin != nil {
-		if err := m.GrantToOrigin.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("grantToOrigin")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("grantToOrigin")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
@@ -305,18 +282,6 @@ func (m *Relation) ContextValidate(ctx context.Context, formats strfmt.Registry)
 }
 
 func (m *Relation) contextValidateGrantToOrigin(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.GrantToOrigin != nil {
-
-		if err := m.GrantToOrigin.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("grantToOrigin")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("grantToOrigin")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

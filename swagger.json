@@ -159,7 +159,7 @@
                 }
             }
         },
-        "/affiliations/{id}": {
+        "/affiliations/{uid}": {
             "get": {
                 "security": [
                     {
@@ -180,8 +180,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Affiliation Id",
-                        "name": "id",
+                        "description": "Affiliation Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -196,6 +196,71 @@
                         "description": "Options",
                         "name": "options",
                         "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Wrapped-Affiliation"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ClientCredentials": [
+                            "persons.affiliations#write"
+                        ]
+                    }
+                ],
+                "description": "You need the affiliations#write scope to access this endpoint.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "affiliations"
+                ],
+                "summary": "Update affiliation",
+                "operationId": "UpdateAffiliation",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Affiliation Uid",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Affiliation",
+                        "name": "affiliation",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AffiliationWrite"
+                        }
                     }
                 ],
                 "responses": {
@@ -245,75 +310,10 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Affiliation Id",
-                        "name": "id",
+                        "description": "Affiliation Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/Wrapped-Affiliation"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "security": [
-                    {
-                        "ClientCredentials": [
-                            "persons.affiliations#write"
-                        ]
-                    }
-                ],
-                "description": "You need the affiliations#write scope to access this endpoint.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "affiliations"
-                ],
-                "summary": "Patch affiliation",
-                "operationId": "PatchAffiliation",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Affiliation Id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Affiliation",
-                        "name": "affiliation",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/AffiliationWritePatch"
-                        }
                     }
                 ],
                 "responses": {
@@ -492,7 +492,7 @@
                 }
             }
         },
-        "/consents/{id}": {
+        "/consents/{uid}": {
             "get": {
                 "security": [
                     {
@@ -513,8 +513,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Consent Id",
-                        "name": "id",
+                        "description": "Consent Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -558,7 +558,7 @@
                     }
                 }
             },
-            "patch": {
+            "put": {
                 "security": [
                     {
                         "ClientCredentials": [
@@ -576,13 +576,13 @@
                 "tags": [
                     "consents"
                 ],
-                "summary": "Patch consent",
-                "operationId": "PatchConsent",
+                "summary": "Update consent",
+                "operationId": "UpdateConsent",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Consent Id",
-                        "name": "id",
+                        "description": "Consent Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -592,7 +592,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ConsentWritePatch"
+                            "$ref": "#/definitions/ConsentWrite"
                         }
                     }
                 ],
@@ -735,13 +735,6 @@
                 "operationId": "CreateCountry",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Country Id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
                         "description": "Country",
                         "name": "country",
                         "in": "body",
@@ -779,7 +772,7 @@
                 }
             }
         },
-        "/countries/{id}": {
+        "/countries/{uid}": {
             "get": {
                 "security": [
                     {
@@ -800,8 +793,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Country Id",
-                        "name": "id",
+                        "description": "Country Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -845,7 +838,7 @@
                     }
                 }
             },
-            "patch": {
+            "put": {
                 "security": [
                     {
                         "ClientCredentials": [
@@ -863,13 +856,13 @@
                 "tags": [
                     "countries"
                 ],
-                "summary": "Patch country",
-                "operationId": "PatchCountry",
+                "summary": "Update country",
+                "operationId": "UpdateCountry",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Country Id",
-                        "name": "id",
+                        "description": "Country Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -879,7 +872,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/CountryWritePatch"
+                            "$ref": "#/definitions/CountryWrite"
                         }
                     }
                 ],
@@ -1079,6 +1072,13 @@
                 "operationId": "FindGroupMembers",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Group UUid",
+                        "name": "groupUid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "type": "integer",
                         "description": "Limit",
                         "name": "limit",
@@ -1164,6 +1164,13 @@
                 "operationId": "CreateGroupMember",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Group UUid",
+                        "name": "groupUid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "GroupMember",
                         "name": "groupMember",
                         "in": "body",
@@ -1222,8 +1229,15 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "GroupMember Id",
+                        "description": "GroupMember Uid",
                         "name": "memberUid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Group UUid",
+                        "name": "groupUid",
                         "in": "path",
                         "required": true
                     },
@@ -1281,7 +1295,14 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "GroupMember Id",
+                        "description": "Group UUid",
+                        "name": "groupUid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "GroupMember Uid",
                         "name": "memberUid",
                         "in": "path",
                         "required": true
@@ -1315,7 +1336,7 @@
                 }
             }
         },
-        "/groups/{id}": {
+        "/groups/{uid}": {
             "get": {
                 "security": [
                     {
@@ -1336,8 +1357,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Group Uid",
-                        "name": "id",
+                        "description": "Group UUid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -1352,6 +1373,71 @@
                         "description": "Options",
                         "name": "options",
                         "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Wrapped-Group"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ClientCredentials": [
+                            "groups#write"
+                        ]
+                    }
+                ],
+                "description": "You need the groups#write scope to access this endpoint.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Update group",
+                "operationId": "UpdateGroup",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Group Uid",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Group",
+                        "name": "group",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GroupWrite"
+                        }
                     }
                 ],
                 "responses": {
@@ -1401,75 +1487,10 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Group Id",
-                        "name": "id",
+                        "description": "Group Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/Wrapped-Group"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "security": [
-                    {
-                        "ClientCredentials": [
-                            "groups#write"
-                        ]
-                    }
-                ],
-                "description": "You need the groups#write scope to access this endpoint.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "groups"
-                ],
-                "summary": "Patch group",
-                "operationId": "PatchGroup",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Group Id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Group",
-                        "name": "group",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/GroupWritePatch"
-                        }
                     }
                 ],
                 "responses": {
@@ -1648,7 +1669,7 @@
                 }
             }
         },
-        "/relations/{id}": {
+        "/relations/{uid}": {
             "get": {
                 "security": [
                     {
@@ -1669,8 +1690,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Relation Id",
-                        "name": "id",
+                        "description": "Relation Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -1714,7 +1735,7 @@
                     }
                 }
             },
-            "patch": {
+            "put": {
                 "security": [
                     {
                         "ClientCredentials": [
@@ -1732,13 +1753,13 @@
                 "tags": [
                     "relations"
                 ],
-                "summary": "Patch relation",
-                "operationId": "PatchRelation",
+                "summary": "Update relation",
+                "operationId": "UpdateRelation",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Relation Id",
-                        "name": "id",
+                        "description": "Relation Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -1748,7 +1769,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/RelationWritePatch"
+                            "$ref": "#/definitions/RelationWrite"
                         }
                     }
                 ],
@@ -1928,7 +1949,7 @@
                 }
             }
         },
-        "/roleAssignments/{id}": {
+        "/roleAssignments/{uid}": {
             "get": {
                 "security": [
                     {
@@ -1949,8 +1970,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "RoleAssignment Id",
-                        "name": "id",
+                        "description": "RoleAssignment Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -1965,6 +1986,71 @@
                         "description": "Options",
                         "name": "options",
                         "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Wrapped-RoleAssignment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ClientCredentials": [
+                            "persons.persons.role_assignments#write"
+                        ]
+                    }
+                ],
+                "description": "You need the persons.role_assignments#write scope to access this endpoint.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "roleAssignments"
+                ],
+                "summary": "Update role assignment",
+                "operationId": "UpdateRoleAssignment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "RoleAssignment Uid",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "RoleAssignment",
+                        "name": "roleAssignment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RoleAssignmentWrite"
+                        }
                     }
                 ],
                 "responses": {
@@ -2014,75 +2100,10 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "RoleAssignment Id",
-                        "name": "id",
+                        "description": "RoleAssignment Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/Wrapped-RoleAssignment"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "security": [
-                    {
-                        "ClientCredentials": [
-                            "persons.persons.role_assignments#write"
-                        ]
-                    }
-                ],
-                "description": "You need the persons.role_assignments#write scope to access this endpoint.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "roleAssignments"
-                ],
-                "summary": "Patch role assignment",
-                "operationId": "PatchRoleAssignment",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "RoleAssignment Id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "RoleAssignment",
-                        "name": "roleAssignment",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/RoleAssignmentWritePatch"
-                        }
                     }
                 ],
                 "responses": {
@@ -2261,7 +2282,7 @@
                 }
             }
         },
-        "/roles/{id}": {
+        "/roles/{uid}": {
             "get": {
                 "security": [
                     {
@@ -2282,8 +2303,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Role Id",
-                        "name": "id",
+                        "description": "Role Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -2476,7 +2497,7 @@
                 }
             }
         },
-        "/v2/orgs/{id}": {
+        "/v2/orgs/{uid}": {
             "get": {
                 "security": [
                     {
@@ -2497,8 +2518,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Org Id",
-                        "name": "id",
+                        "description": "Org Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -2542,7 +2563,7 @@
                     }
                 }
             },
-            "patch": {
+            "put": {
                 "security": [
                     {
                         "ClientCredentials": [
@@ -2560,13 +2581,13 @@
                 "tags": [
                     "orgs"
                 ],
-                "summary": "Patch org",
-                "operationId": "PatchOrg",
+                "summary": "Update org",
+                "operationId": "UpdateOrg",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Org Id",
-                        "name": "id",
+                        "description": "Org Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -2576,7 +2597,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/OrgWritePatch"
+                            "$ref": "#/definitions/OrgWrite"
                         }
                     }
                 ],
@@ -2764,7 +2785,7 @@
                 }
             }
         },
-        "/v2/persons/personID/{id}": {
+        "/v2/persons/personID/{uid}": {
             "get": {
                 "security": [
                     {
@@ -2785,8 +2806,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Person Uid",
-                        "name": "id",
+                        "description": "Person UUid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     }
@@ -2819,7 +2840,7 @@
                 }
             }
         },
-        "/v2/persons/{id}": {
+        "/v2/persons/{uid}": {
             "get": {
                 "security": [
                     {
@@ -2848,8 +2869,8 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Person Id",
-                        "name": "id",
+                        "description": "Person Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
                     },
@@ -2864,6 +2885,71 @@
                         "description": "Options",
                         "name": "options",
                         "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Wrapped-Person"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ClientCredentials": [
+                            "persons#write"
+                        ]
+                    }
+                ],
+                "description": "You need the persons#write scope to access this endpoint.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Update person",
+                "operationId": "UpdatePerson",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Person UUid",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Person",
+                        "name": "person",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PersonWrite"
+                        }
                     }
                 ],
                 "responses": {
@@ -2913,75 +2999,10 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Person Id",
-                        "name": "id",
+                        "description": "Person Uid",
+                        "name": "uid",
                         "in": "path",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/Wrapped-Person"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorData"
-                        }
-                    }
-                }
-            },
-            "patch": {
-                "security": [
-                    {
-                        "ClientCredentials": [
-                            "persons#write"
-                        ]
-                    }
-                ],
-                "description": "You need the persons#write scope to access this endpoint.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "persons"
-                ],
-                "summary": "Patch person",
-                "operationId": "PatchPerson",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Person Id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Person",
-                        "name": "person",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/PersonWritePatch"
-                        }
                     }
                 ],
                 "responses": {
@@ -3132,31 +3153,6 @@
                 }
             }
         },
-        "AffiliationWritePatch": {
-            "type": "object",
-            "properties": {
-                "orgUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "personUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "type": {
-                    "$ref": "#/definitions/AffiliationType"
-                },
-                "validFrom": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "validTo": {
-                    "type": "string",
-                    "format": "date-time",
-                    "x-nullable": true
-                }
-            }
-        },
         "Consent": {
             "type": "object",
             "required": [
@@ -3242,31 +3238,6 @@
                 }
             }
         },
-        "ConsentWritePatch": {
-            "type": "object",
-            "properties": {
-                "orgUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "personUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "purpose": {
-                    "$ref": "#/definitions/ConsentPurpose"
-                },
-                "validFrom": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "validTo": {
-                    "type": "string",
-                    "format": "date-time",
-                    "x-nullable": true
-                }
-            }
-        },
         "Country": {
             "type": "object",
             "required": [
@@ -3311,26 +3282,6 @@
                 "nameNative",
                 "nameNo"
             ],
-            "properties": {
-                "iso2Code": {
-                    "type": "string"
-                },
-                "nameEn": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "nameNative": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "nameNo": {
-                    "type": "string",
-                    "maxLength": 255
-                }
-            }
-        },
-        "CountryWritePatch": {
-            "type": "object",
             "properties": {
                 "iso2Code": {
                     "type": "string"
@@ -3526,30 +3477,6 @@
                 }
             }
         },
-        "GroupWritePatch": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "orgUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "rule": {
-                    "type": "string"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "type": {
-                    "$ref": "#/definitions/GroupType"
-                }
-            }
-        },
         "MaritalStatus": {
             "type": "string",
             "enum": [
@@ -3676,44 +3603,6 @@
                 "name",
                 "type"
             ],
-            "properties": {
-                "activeStatus": {
-                    "maxLength": 255,
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/OrgActiveStatus"
-                        }
-                    ]
-                },
-                "billingAddress": {
-                    "$ref": "#/definitions/Address"
-                },
-                "districtName": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "name": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "postalAddress": {
-                    "$ref": "#/definitions/Address"
-                },
-                "type": {
-                    "maxLength": 255,
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/OrgType"
-                        }
-                    ]
-                },
-                "visitingAddress": {
-                    "$ref": "#/definitions/Address"
-                }
-            }
-        },
-        "OrgWritePatch": {
-            "type": "object",
             "properties": {
                 "activeStatus": {
                     "maxLength": 255,
@@ -4006,74 +3895,6 @@
                 }
             }
         },
-        "PersonWritePatch": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "$ref": "#/definitions/Address"
-                },
-                "birthDate": {
-                    "type": "string",
-                    "format": "date"
-                },
-                "cellPhone": {
-                    "type": "string"
-                },
-                "cellPhoneVerified": {
-                    "type": "boolean"
-                },
-                "deceasedDate": {
-                    "type": "string",
-                    "format": "date",
-                    "x-nullable": true
-                },
-                "displayName": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "email": {
-                    "type": "string"
-                },
-                "emailVerified": {
-                    "type": "boolean"
-                },
-                "firstName": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "gender": {
-                    "$ref": "#/definitions/Gender"
-                },
-                "homePhone": {
-                    "type": "string"
-                },
-                "lastName": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "maritalStatus": {
-                    "$ref": "#/definitions/MaritalStatus"
-                },
-                "middleName": {
-                    "type": "string",
-                    "maxLength": 255
-                },
-                "nationalIds": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/NationalId"
-                    }
-                },
-                "preferences": {
-                    "$ref": "#/definitions/PreferencesPatch"
-                },
-                "profilePicture": {
-                    "description": "URL of person's profile picture",
-                    "type": "string",
-                    "maxLength": 512
-                }
-            }
-        },
         "Preferences": {
             "type": "object",
             "properties": {
@@ -4091,26 +3912,6 @@
                 },
                 "visibility": {
                     "$ref": "#/definitions/VisibilityPreferences"
-                }
-            }
-        },
-        "PreferencesPatch": {
-            "type": "object",
-            "properties": {
-                "contentLanguages": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "uiLanguages": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "visibility": {
-                    "$ref": "#/definitions/VisibilityPreferencesPatch"
                 }
             }
         },
@@ -4204,52 +4005,6 @@
                 "type",
                 "validFrom"
             ],
-            "properties": {
-                "grantToOrigin": {
-                    "description": "Permission of target on origin",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/GrantType"
-                        }
-                    ]
-                },
-                "grantToTarget": {
-                    "description": "Permission of origin on target",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/GrantType"
-                        }
-                    ]
-                },
-                "originUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "targetUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "type": {
-                    "description": "Type of the relation, defined as {origin} is {type} (of) {target}",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/RelationType"
-                        }
-                    ]
-                },
-                "validFrom": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "validTo": {
-                    "type": "string",
-                    "format": "date-time",
-                    "x-nullable": true
-                }
-            }
-        },
-        "RelationWritePatch": {
-            "type": "object",
             "properties": {
                 "grantToOrigin": {
                     "description": "Permission of target on origin",
@@ -4398,32 +4153,6 @@
                 }
             }
         },
-        "RoleAssignmentWritePatch": {
-            "type": "object",
-            "properties": {
-                "orgUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "personUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "roleUid": {
-                    "type": "string",
-                    "format": "uuid"
-                },
-                "validFrom": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "validTo": {
-                    "type": "string",
-                    "format": "date-time",
-                    "x-nullable": true
-                }
-            }
-        },
         "RoleScope": {
             "type": "string",
             "enum": [
@@ -4455,17 +4184,6 @@
             "required": [
                 "search"
             ],
-            "properties": {
-                "birthdayList": {
-                    "type": "boolean"
-                },
-                "search": {
-                    "$ref": "#/definitions/SearchVisibility"
-                }
-            }
-        },
-        "VisibilityPreferencesPatch": {
-            "type": "object",
             "properties": {
                 "birthdayList": {
                     "type": "boolean"

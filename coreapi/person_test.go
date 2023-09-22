@@ -9,8 +9,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const TestPersonUID strfmt.UUID = "657a66ca-9cd0-4b61-9476-697016e26fbc"
-
 func TestGetPerson(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead)
 

@@ -4,11 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/go-openapi/strfmt"
 	"github.com/stretchr/testify/assert"
 )
-
-const TestOrgUID strfmt.UUID = "9e0b8d03-9799-416d-a70b-6da9f2e1ab48"
 
 func TestGetOrg(t *testing.T) {
 	c := GetTestClient(ScopePersonsRead, ScopeOrgsRead)
