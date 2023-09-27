@@ -1,3 +1,3 @@
-package coreapi
+package bcccoreapi
 
 var Version = "latest"

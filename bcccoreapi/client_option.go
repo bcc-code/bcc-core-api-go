@@ -1,4 +1,4 @@
-package coreapi
+package bcccoreapi
 
 import (
 	"context"
@@ -62,15 +62,15 @@ func WithStaticToken(token string) ClientOption {
 	}
 }
 
-// WithClientCredentials configures the SDK to authenticate using the provided token source
+// WithTokenSource configures the SDK to authenticate using the provided token source
 func WithTokenSource(tokenSource oauth2.TokenSource) ClientOption {
 	return func(c *Client) {
 		c.tokenSource = tokenSource
 	}
 }
 
-// WithClient configures the SDK to use the provided client.
-func WithClient(client *http.Client) ClientOption {
+// WithHTTPClient configures the SDK to use the provided client.
+func WithHTTPClient(client *http.Client) ClientOption {
 	return func(m *Client) {
 		m.http = client
 	}

@@ -1,4 +1,4 @@
-package coreapi
+package bcccoreapi
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 )
 
 func TestCannotParseToken(t *testing.T) {
-	c := New("http://localhost:3010", WithStaticToken("Invalid"))
+	c := NewClient("http://localhost:3010", WithStaticToken("Invalid"))
 	_, err := c.Person.Find(context.Background())
 	assertErrType(t, err, ErrorCodeInvalidToken)
 }

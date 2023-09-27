@@ -1,4 +1,4 @@
-package coreapi
+package bcccoreapi
 
 import (
 	"encoding/json"
