@@ -33,7 +33,7 @@ func main() {
 	clientSecret := "EXAMPLE_CLIENT_SECRET"
 
 	// Initialize a new client using a domain, client ID and client secret.
-	bcccoreapi, err := bcccoreapi.NewClient(
+	client, err := bcccoreapi.NewClient(
 		bcccoreapi.WithClientCredentials(
 			context.Background(),
 			clientID,
@@ -47,7 +47,7 @@ func main() {
 	// Now we can interact with the BCC Core API.
 	// Fetch a person by Uid
 
-	p, err := bcccoreapi.Person.Get(context.Background(), "657a66ca-9cd0-4b61-9476-697016e26fbc")
+	p, err := client.Person.Get(context.Background(), "657a66ca-9cd0-4b61-9476-697016e26fbc")
 
 	if err != nil {
 		log.Fatalf("failed to get a person by Uid: %+v", err)

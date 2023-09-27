@@ -42,7 +42,7 @@ const (
 	groupMembersPath    = "/members"
 )
 
-var DefaultAgent = fmt.Sprintf("Go-Coreapi/%s", Version)
+var DefaultAgent = fmt.Sprintf("Go-BCCCoreApi/%s", Version)
 
 func NewClient(options ...ClientOption) *Client {
 	c := &Client{
