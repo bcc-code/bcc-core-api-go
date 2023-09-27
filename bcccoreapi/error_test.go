@@ -9,7 +9,9 @@ import (
 )
 
 func TestCannotParseToken(t *testing.T) {
-	c := NewClient("http://localhost:3010", WithStaticToken("Invalid"))
+	c := NewClient(WithCustomEnvironment(EnvironmentConfig{
+		BaseUrl: "http://localhost:3010",
+	}), WithStaticToken("Invalid"))
 	_, err := c.Person.Find(context.Background())
 	assertErrType(t, err, ErrorCodeInvalidToken)
 }

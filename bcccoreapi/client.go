@@ -10,9 +10,9 @@ import (
 
 type Client struct {
 	http          *http.Client
-	apiUrl        string
 	apiAudience   string
 	oauthTokenUrl string
+	envConfig     EnvironmentConfig
 
 	tokenSource oauth2.TokenSource
 
@@ -43,11 +43,11 @@ const (
 
 var DefaultAgent = fmt.Sprintf("Go-Coreapi/%s", Version)
 
-func NewClient(url string, options ...ClientOption) *Client {
+func NewClient(options ...ClientOption) *Client {
 	c := &Client{
 		http:      http.DefaultClient,
-		apiUrl:    url,
 		httpAgent: DefaultAgent,
+		envConfig: envMap[EnvironmentProd],
 	}
 
 	for _, option := range options {

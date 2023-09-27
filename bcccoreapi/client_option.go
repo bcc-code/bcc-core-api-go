@@ -12,17 +12,32 @@ import (
 
 type ClientOption func(*Client)
 
+func WithEnvironment(env Environment) ClientOption {
+	envConfig, ok := envMap[env]
+	if !ok {
+		panic("invalid environment")
+	}
+
+	return WithCustomEnvironment(envConfig)
+}
+
+func WithCustomEnvironment(envConfig EnvironmentConfig) ClientOption {
+	return func(c *Client) {
+		c.envConfig = envConfig
+	}
+}
+
 // WithClientCredentials configures the SDK to authenticate using the client
 // credentials authentication flow.
-func WithClientCredentials(ctx context.Context, credEnv ClientCredentialsEnv, clientID, clientSecret string, scopes ...Scope) ClientOption {
+func WithClientCredentials(ctx context.Context, clientID, clientSecret string, scopes ...Scope) ClientOption {
 	return func(c *Client) {
 		cfg := &clientcredentials.Config{
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
-			TokenURL:     credEnv.TokenUrl,
+			TokenURL:     c.envConfig.TokenUrl,
 			Scopes:       scopesToStrings(scopes),
 			EndpointParams: url.Values{
-				"audience": []string{credEnv.Audience},
+				"audience": []string{c.envConfig.Audience},
 			},
 		}
 
@@ -38,15 +53,15 @@ func scopesToStrings(scopes []Scope) []string {
 
 // WithClientCredentials configures the SDK to authenticate using the client
 // credentials authentication flow against the emulator.
-func WithEmulator(ctx context.Context, credEnv ClientCredentialsEnv, scopes ...Scope) ClientOption {
+func WithEmulator(ctx context.Context, scopes ...Scope) ClientOption {
 	return func(c *Client) {
 		cfg := &clientcredentials.Config{
 			ClientID:     "",
 			ClientSecret: "",
-			TokenURL:     credEnv.TokenUrl,
+			TokenURL:     c.envConfig.TokenUrl,
 			Scopes:       scopesToStrings(scopes),
 			EndpointParams: url.Values{
-				"audience":      []string{credEnv.Audience},
+				"audience":      []string{c.envConfig.Audience},
 				"custom_claims": []string{`{"orgs": "-", "app_uid": "990dc470-c4f4-429e-a11e-f094cb1cf7c0"}`},
 			},
 		}

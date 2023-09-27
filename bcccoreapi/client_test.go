@@ -16,10 +16,11 @@ func TestNewClient(t *testing.T) {
 }
 
 func getClientForTests(t *testing.T, scopes ...Scope) *Client {
-	c := NewClient("http://localhost:3010", WithEmulator(context.Background(), ClientCredentialsEnv{
+	c := NewClient(WithCustomEnvironment(EnvironmentConfig{
+		BaseUrl:  "http://localhost:3010",
 		TokenUrl: "http://localhost:3020/token",
 		Audience: "localhost:3020",
-	}, scopes...))
+	}), WithEmulator(context.Background(), scopes...))
 
 	t.Cleanup(func() { c.RefreshTestData() })
 
