@@ -21,7 +21,7 @@ type Client struct {
 	Affiliation    *genericClient[models.Affiliation, models.AffiliationWrite]
 	Consent        *genericClient[models.Consent, models.ConsentWrite]
 	Country        *genericClient[models.Country, models.CountryWrite]
-	Group          *GroupClient
+	Group          *groupClient
 	Org            *genericClient[models.Org, models.OrgWrite]
 	Person         *genericClient[models.Person, models.PersonWrite]
 	Relation       *genericClient[models.Relation, models.RelationWrite]
@@ -39,6 +39,7 @@ const (
 	relationsPath       = "/relations"
 	roleAssignmentsPath = "/roleAssignments"
 	rolesPath           = "/roles"
+	groupMembersPath    = "/members"
 )
 
 var DefaultAgent = fmt.Sprintf("Go-Coreapi/%s", Version)
@@ -69,7 +70,7 @@ func NewClient(options ...ClientOption) *Client {
 	c.Affiliation = &genericClient[models.Affiliation, models.AffiliationWrite]{c, affiliationsPath}
 	c.Consent = &genericClient[models.Consent, models.ConsentWrite]{c, consentsPath}
 	c.Country = &genericClient[models.Country, models.CountryWrite]{c, countriesPath}
-	c.Group = &GroupClient{genericClient[models.Group, models.GroupWrite]{c, groupsPath}}
+	c.Group = &groupClient{genericClient[models.Group, models.GroupWrite]{c, groupsPath}}
 	c.Org = &genericClient[models.Org, models.OrgWrite]{c, orgsPath}
 	c.Person = &genericClient[models.Person, models.PersonWrite]{c, personsPath}
 	c.Relation = &genericClient[models.Relation, models.RelationWrite]{c, relationsPath}
