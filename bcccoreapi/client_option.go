@@ -12,6 +12,7 @@ import (
 
 type ClientOption func(*Client)
 
+// WithEnvironment configures the SDK to override the used environment (by default Prod is used)
 func WithEnvironment(env Environment) ClientOption {
 	envConfig, ok := envMap[env]
 	if !ok {
@@ -21,6 +22,8 @@ func WithEnvironment(env Environment) ClientOption {
 	return WithCustomEnvironment(envConfig)
 }
 
+// WithCustomEnvironment sets a custom environment config for the SDK to use.
+// Can be used to if you want to pass your requests thorugh a proxy, or to connect to an emulator
 func WithCustomEnvironment(envConfig EnvironmentConfig) ClientOption {
 	return func(c *Client) {
 		c.envConfig = envConfig
@@ -51,10 +54,12 @@ func scopesToStrings(scopes []Scope) []string {
 	})
 }
 
-// WithClientCredentials configures the SDK to authenticate using the client
+// WithEmulator configures the SDK to authenticate using the client
 // credentials authentication flow against the emulator.
-func WithEmulator(ctx context.Context, scopes ...Scope) ClientOption {
+func WithEmulator(ctx context.Context, envConfig EnvironmentConfig, scopes ...Scope) ClientOption {
 	return func(c *Client) {
+		c.envConfig = envConfig
+
 		cfg := &clientcredentials.Config{
 			ClientID:     "",
 			ClientSecret: "",
@@ -62,7 +67,7 @@ func WithEmulator(ctx context.Context, scopes ...Scope) ClientOption {
 			Scopes:       scopesToStrings(scopes),
 			EndpointParams: url.Values{
 				"audience":      []string{c.envConfig.Audience},
-				"custom_claims": []string{`{"orgs": "-", "app_uid": "990dc470-c4f4-429e-a11e-f094cb1cf7c0"}`},
+				"custom_claims": []string{`{"orgs": "-", "app_uid": "00000000-0000-0000-0000-000000000000"}`},
 			},
 		}
 
@@ -70,7 +75,7 @@ func WithEmulator(ctx context.Context, scopes ...Scope) ClientOption {
 	}
 }
 
-// WithClientCredentials configures the SDK to authenticate using the provided token
+// WithStaticToken configures the SDK to authenticate using the provided token
 func WithStaticToken(token string) ClientOption {
 	return func(c *Client) {
 		c.tokenSource = oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
@@ -84,7 +89,7 @@ func WithTokenSource(tokenSource oauth2.TokenSource) ClientOption {
 	}
 }
 
-// WithHTTPClient configures the SDK to use the provided client.
+// WithHTTPClient configures the SDK to use the provided HTTP client.
 func WithHTTPClient(client *http.Client) ClientOption {
 	return func(m *Client) {
 		m.http = client

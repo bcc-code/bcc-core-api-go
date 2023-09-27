@@ -11,6 +11,9 @@ import (
 
 type RequestOption func(*http.Request)
 
+// Limit will restrict the number of returned results to n
+// See more here https://developer.bcc.no/bcc-core-api/crud/query-parameters.html#limit
+// Only works for Find endpoints
 func Limit(n int) RequestOption {
 	return func(req *http.Request) {
 		q := req.URL.Query()
@@ -19,6 +22,9 @@ func Limit(n int) RequestOption {
 	}
 }
 
+// Skip will skip the first n rows from the results
+// See more here https://developer.bcc.no/bcc-core-api/crud/query-parameters.html#skip
+// Only works for Find endpoints
 func Skip(n int) RequestOption {
 	return func(req *http.Request) {
 		q := req.URL.Query()
@@ -27,6 +33,9 @@ func Skip(n int) RequestOption {
 	}
 }
 
+// Skip will skip the first (n - 1) * Limit rows from the results
+// See more here https://developer.bcc.no/bcc-core-api/crud/query-parameters.html#page
+// Only works for Find endpoints
 func Page(n int) RequestOption {
 	return func(req *http.Request) {
 		q := req.URL.Query()
@@ -35,6 +44,9 @@ func Page(n int) RequestOption {
 	}
 }
 
+// Fields allows to specify the fields returned by the SDK
+// See more here https://developer.bcc.no/bcc-core-api/crud/query-parameters.html#fields
+// Works for Find and Get endpoints
 func Fields(fields ...string) RequestOption {
 	return func(req *http.Request) {
 		q := req.URL.Query()
@@ -43,6 +55,9 @@ func Fields(fields ...string) RequestOption {
 	}
 }
 
+// Sorts the result by a given field
+// See more here https://developer.bcc.no/bcc-core-api/crud/query-parameters.html#sort
+// Only works for Find endpoints
 func Sort(sortFields ...string) RequestOption {
 	return func(req *http.Request) {
 		q := req.URL.Query()
@@ -51,6 +66,9 @@ func Sort(sortFields ...string) RequestOption {
 	}
 }
 
+// Filter the result based on the provided condition
+// See more here https://developer.bcc.no/bcc-core-api/crud/query-parameters.html#filter
+// Only works for Find endpoints
 func Filter(filter string) RequestOption {
 	return func(req *http.Request) {
 		q := req.URL.Query()
@@ -65,6 +83,9 @@ type QueryOpts struct {
 	OrgUIDs                                []uuid.UUID
 }
 
+// Sets additional query options
+// See more here https://developer.bcc.no/bcc-core-api/crud/query-parameters.html#options
+// Works for Find and Get endpoints
 func QueryOptions(q QueryOpts) RequestOption {
 	queryOptionsJson, _ := json.Marshal(q)
 	return func(req *http.Request) {
@@ -74,6 +95,9 @@ func QueryOptions(q QueryOpts) RequestOption {
 	}
 }
 
+// Performs a fuzzy search
+// See more here https://developer.bcc.no/bcc-core-api/crud/query-parameters.html#search
+// Only works for Find Person endpoint
 func Search(s string) RequestOption {
 	return func(req *http.Request) {
 		q := req.URL.Query()
