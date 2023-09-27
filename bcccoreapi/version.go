@@ -1,3 +1,3 @@
 package bcccoreapi
 
-var Version = "latest"
+var Version = "0.2.0-alpha"
