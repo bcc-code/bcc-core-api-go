@@ -1,4 +1,4 @@
-package coreapi
+package bcccoreapi
 
 import (
 	"fmt"
@@ -10,9 +10,9 @@ import (
 
 type Client struct {
 	http          *http.Client
-	apiUrl        string
 	apiAudience   string
 	oauthTokenUrl string
+	envConfig     EnvironmentConfig
 
 	tokenSource oauth2.TokenSource
 
@@ -21,7 +21,7 @@ type Client struct {
 	Affiliation    *genericClient[models.Affiliation, models.AffiliationWrite]
 	Consent        *genericClient[models.Consent, models.ConsentWrite]
 	Country        *genericClient[models.Country, models.CountryWrite]
-	Group          *GroupClient
+	Group          *groupClient
 	Org            *genericClient[models.Org, models.OrgWrite]
 	Person         *genericClient[models.Person, models.PersonWrite]
 	Relation       *genericClient[models.Relation, models.RelationWrite]
@@ -30,24 +30,25 @@ type Client struct {
 }
 
 const (
-	AffiliationsPath    = "/affiliations"
-	ConsentsPath        = "/consents"
-	CountriesPath       = "/countries"
-	GroupsPath          = "/groups"
-	OrgsPath            = "/v2/orgs"
-	PersonsPath         = "/v2/persons"
-	RelationsPath       = "/relations"
-	RoleAssignmentsPath = "/roleAssignments"
-	RolesPath           = "/roles"
+	affiliationsPath    = "/affiliations"
+	consentsPath        = "/consents"
+	countriesPath       = "/countries"
+	groupsPath          = "/groups"
+	orgsPath            = "/v2/orgs"
+	personsPath         = "/v2/persons"
+	relationsPath       = "/relations"
+	roleAssignmentsPath = "/roleAssignments"
+	rolesPath           = "/roles"
+	groupMembersPath    = "/members"
 )
 
-var DefaultAgent = fmt.Sprintf("Go-Coreapi/%s", Version)
+var DefaultAgent = fmt.Sprintf("Go-BCCCoreApi/%s", Version)
 
-func New(url string, options ...ClientOption) *Client {
+func NewClient(options ...ClientOption) *Client {
 	c := &Client{
 		http:      http.DefaultClient,
-		apiUrl:    url,
 		httpAgent: DefaultAgent,
+		envConfig: envMap[EnvironmentProd],
 	}
 
 	for _, option := range options {
@@ -66,15 +67,15 @@ func New(url string, options ...ClientOption) *Client {
 		},
 	}
 
-	c.Affiliation = &genericClient[models.Affiliation, models.AffiliationWrite]{c, AffiliationsPath}
-	c.Consent = &genericClient[models.Consent, models.ConsentWrite]{c, ConsentsPath}
-	c.Country = &genericClient[models.Country, models.CountryWrite]{c, CountriesPath}
-	c.Group = &GroupClient{genericClient[models.Group, models.GroupWrite]{c, GroupsPath}}
-	c.Org = &genericClient[models.Org, models.OrgWrite]{c, OrgsPath}
-	c.Person = &genericClient[models.Person, models.PersonWrite]{c, PersonsPath}
-	c.Relation = &genericClient[models.Relation, models.RelationWrite]{c, RelationsPath}
-	c.RoleAssignment = &genericClient[models.RoleAssignment, models.RoleAssignmentWrite]{c, RoleAssignmentsPath}
-	c.Role = &genericClient[models.Role, models.RoleWrite]{c, RolesPath}
+	c.Affiliation = &genericClient[models.Affiliation, models.AffiliationWrite]{c, affiliationsPath}
+	c.Consent = &genericClient[models.Consent, models.ConsentWrite]{c, consentsPath}
+	c.Country = &genericClient[models.Country, models.CountryWrite]{c, countriesPath}
+	c.Group = &groupClient{genericClient[models.Group, models.GroupWrite]{c, groupsPath}}
+	c.Org = &genericClient[models.Org, models.OrgWrite]{c, orgsPath}
+	c.Person = &genericClient[models.Person, models.PersonWrite]{c, personsPath}
+	c.Relation = &genericClient[models.Relation, models.RelationWrite]{c, relationsPath}
+	c.RoleAssignment = &genericClient[models.RoleAssignment, models.RoleAssignmentWrite]{c, roleAssignmentsPath}
+	c.Role = &genericClient[models.Role, models.RoleWrite]{c, rolesPath}
 
 	return c
 }

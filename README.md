@@ -5,7 +5,7 @@ The Go SDK for the BCC Core API
 
 ## Documentation
 
-- [Godoc](https://pkg.go.dev/github.com/bcc-code/bcc-core-api-go/coreapi).
+- [Godoc](https://pkg.go.dev/github.com/bcc-code/bcc-core-api-go/bcccoreapi).
 
 ## Getting started
 
@@ -25,8 +25,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/bcc-code/bcc-core-api-go/coreapi"
-	"github.com/google/uuid"
+	"github.com/bcc-code/bcc-core-api-go/bcccoreapi"
 )
 
 func main() {
@@ -34,11 +33,9 @@ func main() {
 	clientSecret := "EXAMPLE_CLIENT_SECRET"
 
 	// Initialize a new client using a domain, client ID and client secret.
-	coreAPI, err := coreapi.New(
-		coreapi.UrlSandbox, // Predefined Core API url for the Sandbox environment
-		coreapi.WithClientCredentials(
+	client, err := bcccoreapi.NewClient(
+		bcccoreapi.WithClientCredentials(
 			context.Background(),
-			coreapi.CredEnvSandbox, // Predefined Identity server information for the Sandbox environment
 			clientID,
 			clientSecret,
 		),
@@ -50,8 +47,7 @@ func main() {
 	// Now we can interact with the BCC Core API.
 	// Fetch a person by Uid
 
-	p, err := coreAPI.Person.Get(context.Background(),
-		uuid.MustParse("657a66ca-9cd0-4b61-9476-697016e26fbc"))
+	p, err := client.Person.Get(context.Background(), "657a66ca-9cd0-4b61-9476-697016e26fbc")
 
 	if err != nil {
 		log.Fatalf("failed to get a person by Uid: %+v", err)

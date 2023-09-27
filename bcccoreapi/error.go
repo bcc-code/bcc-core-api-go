@@ -1,4 +1,4 @@
-package coreapi
+package bcccoreapi
 
 import (
 	"encoding/json"
@@ -28,12 +28,12 @@ const (
 	ErrorCodeUnknownErrorResponse ErrorCode = "unknown-error-response"
 )
 
-type ErrorResponse struct {
+type errorResponse struct {
 	Error Error `json:"error"`
 }
 
 func newError(response *http.Response) error {
-	apiError := &ErrorResponse{}
+	apiError := &errorResponse{}
 
 	if err := json.NewDecoder(response.Body).Decode(apiError); err != nil {
 		err = fmt.Errorf("%d %s:failed to decode json error response payload: %w",

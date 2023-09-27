@@ -1,4 +1,4 @@
-package coreapi
+package bcccoreapi
 
 import "github.com/go-openapi/strfmt"
 

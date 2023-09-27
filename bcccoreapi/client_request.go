@@ -1,4 +1,4 @@
-package coreapi
+package bcccoreapi
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 
 // Joins provided url parts with the base url to build the endpoint for calling
 func (c *Client) URL(parts ...string) string {
-	path, _ := url.JoinPath(c.apiUrl, parts...)
+	path, _ := url.JoinPath(c.envConfig.BaseUrl, parts...)
 	return path
 }
 
