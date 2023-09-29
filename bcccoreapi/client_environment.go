@@ -22,7 +22,7 @@ var envMap = map[Environment]EnvironmentConfig{
 
 var envProd = EnvironmentConfig{
 	BaseUrl:  "https://api.bcc.no",
-	TokenUrl: "https://bcc-sso.eu.auth0.com/oauth/token",
+	TokenUrl: "https://login.bcc.no/oauth/token",
 	Audience: "api.bcc.no",
 }
 
